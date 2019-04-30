@@ -1,2 +1,2 @@
 # learning-app
-A simple and quick way to set up and learn MERN Stack using this application.
+A simple and quick way to get started with MERN Stack
