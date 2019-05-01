@@ -169,7 +169,11 @@ export default class Table extends Component {
                           value={
                             this.state.nameChange
                               ? this.state.name
+                                ? this.state.name
+                                : ""
                               : this.state.userData.name
+                              ? this.state.userData.name
+                              : ""
                           }
                           className="form-control"
                           name="name"
@@ -186,7 +190,11 @@ export default class Table extends Component {
                           value={
                             this.state.ageChange
                               ? this.state.age
+                                ? this.state.age
+                                : ""
                               : this.state.userData.age
+                              ? this.state.userData.age
+                              : ""
                           }
                           className="form-control"
                           name="age"

@@ -17,6 +17,11 @@ export default class Todo extends Component {
     this.props.handleSubmit(this.state);
     this.setState({ name: "", age: "" });
   };
+
+  handleCancelForm = e => {
+    e.preventDefault();
+    this.setState({ name: "", age: "" });
+  };
   render() {
     const { age, name } = this.state;
     return (
@@ -47,12 +52,21 @@ export default class Todo extends Component {
             />
           </div>
         </div>
-        <button
-          className="btn btn-warning"
-          onClick={e => this.handleSubmitForm(e)}
-        >
-          Submit
-        </button>
+        <div className="form-group col-md-10" style={{ marginLeft: "-1.2%" }}>
+          <button
+            className="btn btn-success"
+            onClick={e => this.handleSubmitForm(e)}
+          >
+            Submit
+          </button>
+          &nbsp; &nbsp;
+          <button
+            className="btn btn-warning"
+            onClick={e => this.handleCancelForm(e)}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     );
   }
