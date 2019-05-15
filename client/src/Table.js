@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import _ from "lodash";
+import axios from "axios";
 
 export default class Table extends Component {
   state = {
@@ -11,17 +13,9 @@ export default class Table extends Component {
 
   getUserDetails = (e, uuid) => {
     e.preventDefault();
-    fetch("http://localhost:5000/UserDetails/" + uuid, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
+    axios.get("http://localhost:5000/UserDetails/" + uuid)
       .then(response => {
-        response.json().then(data => {
-          this.setState({ userData: data });
-        });
+          this.setState({ userData: response.data });
       })
       .catch(error => console.log(error));
   };
@@ -42,40 +36,27 @@ export default class Table extends Component {
       name: this.state.nameChange ? this.state.name : this.state.userData.name,
       age: this.state.ageChange ? this.state.age : this.state.userData.age
     };
-    fetch("http://localhost:5000/UserDetails/" + uuid, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(userData)
+    axios.put("http://localhost:5000/UserDetails/" + uuid, {
+        name: userData.name,
+        age: userData.age,
+        uuid: uuid
     })
       .then(response => {
-        response.json().then(data => {
           this.setState({
             name: "",
             age: "",
             nameChange: false,
             ageChange: false
           });
-        });
       })
       .catch(error => console.log(error));
   };
 
   deleteUser = (e, uuid) => {
     e.preventDefault();
-    fetch("http://localhost:5000/UserDetails/" + uuid, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
+    axios.delete("http://localhost:5000/UserDetails/" + uuid)
       .then(response => {
-        response.json().then(data => {
           window.location.reload(true);
-        });
       })
       .catch(error => console.log(error));
   };
@@ -115,8 +96,7 @@ export default class Table extends Component {
                 {Object.keys(user).length === 0 &&
                 user.constructor === Object ? null : (
                   <tbody>
-                    {user.map((user, u) => {
-                      return (
+                    {_(user).orderBy("name", "asc").map((user, u) => (
                         <tr key={u}>
                           <td>{u}</td>
                           <td>{user.name}</td>
@@ -137,8 +117,8 @@ export default class Table extends Component {
                             onClick={e => this.getUserDetails(e, user.uuid)}
                           />
                         </tr>
-                      );
-                    })}
+                      )).value()
+                    }
                   </tbody>
                 )}
               </table>

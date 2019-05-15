@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Todo from "./Todo";
 import Table from "./Table";
+import axios from "axios";
 
 export default class App extends Component {
   state = {
@@ -9,22 +10,18 @@ export default class App extends Component {
     submitted: false
   };
   componentDidMount() {
-    fetch("http://localhost:5000/UserDetails")
+    axios.get("http://localhost:5000/UserDetails")
       .then(response => {
-        response.json().then(data => {
-          this.setState({ userDetails: data });
-        });
+          this.setState({ userDetails: response.data });
       })
       .catch(error => console.log(error));
   }
 
   componentDidUpdate() {
     if (this.state.submitted) {
-      fetch("http://localhost:5000/UserDetails")
+      axios.get("http://localhost:5000/UserDetails")
         .then(response => {
-          response.json().then(data => {
-            this.setState({ userDetails: data, submitted: false });
-          });
+            this.setState({ userDetails: response.data, submitted: false });
         })
         .catch(error => console.log(error));
     }
@@ -39,23 +36,15 @@ export default class App extends Component {
       d = Math.floor(d / 16);
       return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
     });
-    var userData = {
-      name: user.name,
-      age: user.age,
-      uuid: uuid
-    };
-    fetch("http://localhost:5000/UserDetails", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(userData)
-    })
+
+    axios.post("http://localhost:5000/UserDetails", {
+        name: user.name,
+        age: user.age,
+        uuid: uuid
+      }
+    )
       .then(response => {
-        response.json().then(body => {
-          this.setState({ user: [...this.state.user, body], submitted: true });
-        });
+          this.setState({ user: [...this.state.user, response.data], submitted: true });
       })
       .catch(error => console.log(error));
   };
