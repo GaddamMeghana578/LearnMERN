@@ -21,52 +21,87 @@ Cloning the repository
 git clone ...
 ```
 
-Enter cloned directory
-
-```
-cd LearnMERN/
-```
-
-Enter Server directory and do npm install or yarn install
-
-```
-cd LearnMERN/server && npm install --save or yarn install --save
-```
-
-Enter Client directory and do npm install or yarn install
-
-```
-cd LearnMERN/client && npm install --save or yarn install --save
-```
-
 ## Starting the repository on your machine
 
 You will need to run client & server seperately, ports are already configured, make sure you don't conflict them if you change anything.
 
 If you are not using **MongoDBAtlas** then do the below:
 
-Start Mongo server in your project directory
+Start Mongo server in your project directory on a new terminal
 
 ```
-cd LearnMERN && mongod
+cd LearnMERN
+```
+
+```
+LearnMERN/mongod
 ```
 
 On mac book you need to run
 
 ```
-cd LearnMERN && sudo mongod
+LearnMERN/sudo mongod
 ```
 
-Enter client directory and do npm start or yarn start
+## Enter Server directory on a new terminal
 
 ```
-cd LearnMERN/client && npm start or yarn start
+cd LearnMERN/server
 ```
 
-Enter server directory and do npm start or yarn start
+Install the packages on the server
 
 ```
-cd LearnMERN/server && npm start or yarn start
+LearnMERN/server/npm install
+```
+
+OR
+
+```
+LearnMERN/server/yarn install
+```
+
+Run the server
+
+```
+LearnMERN/server/npm start
+```
+
+OR
+
+```
+LearnMERN/server/yarn start
+```
+
+## Enter Client directory on a new terminal
+
+```
+cd LearnMERN/client
+```
+
+Install the packages on the client
+
+```
+LearnMERN/client/npm install
+```
+
+OR
+
+```
+LearnMERN/client/yarn install
+
+```
+
+Run the application on the client
+
+```
+LearnMERN/client/npm start
+```
+
+OR
+
+```
+LearnMERN/client/yarn start
 ```
 
 Now you can see that **localhost:3000** automatically opens up on your browser and you can use the app
