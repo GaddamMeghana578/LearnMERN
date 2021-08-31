@@ -8,19 +8,20 @@ export default class Table extends Component {
     name: "",
     age: "",
     nameChange: false,
-    ageChange: false
+    ageChange: false,
   };
 
   getUserDetails = (e, uuid) => {
     e.preventDefault();
-    axios.get("http://localhost:5000/UserDetails/" + uuid)
-      .then(response => {
-          this.setState({ userData: response.data });
+    axios
+      .get("http://localhost:5000/UserDetails/" + uuid)
+      .then((response) => {
+        this.setState({ userData: response.data });
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   };
 
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     if (name === "age") {
@@ -34,34 +35,36 @@ export default class Table extends Component {
     e.preventDefault();
     let userData = {
       name: this.state.nameChange ? this.state.name : this.state.userData.name,
-      age: this.state.ageChange ? this.state.age : this.state.userData.age
+      age: this.state.ageChange ? this.state.age : this.state.userData.age,
     };
-    axios.put("http://localhost:5000/UserDetails/" + uuid, {
+    axios
+      .put("http://localhost:5000/UserDetails/" + uuid, {
         name: userData.name,
         age: userData.age,
-        uuid: uuid
-    })
-      .then(response => {
-          this.setState({
-            name: "",
-            age: "",
-            nameChange: false,
-            ageChange: false
-          });
+        uuid: uuid,
       })
-      .catch(error => console.log(error));
+      .then((response) => {
+        this.setState({
+          name: "",
+          age: "",
+          nameChange: false,
+          ageChange: false,
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
   deleteUser = (e, uuid) => {
     e.preventDefault();
-    axios.delete("http://localhost:5000/UserDetails/" + uuid)
-      .then(response => {
-          window.location.reload(true);
+    axios
+      .delete("http://localhost:5000/UserDetails/" + uuid)
+      .then((response) => {
+        window.location.reload(true);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   };
 
-  handleRefresh = e => {
+  handleRefresh = (e) => {
     e.preventDefault();
     window.location.reload();
   };
@@ -96,7 +99,9 @@ export default class Table extends Component {
                 {Object.keys(user).length === 0 &&
                 user.constructor === Object ? null : (
                   <tbody>
-                    {_(user).orderBy("name", "asc").map((user, u) => (
+                    {_(user)
+                      .orderBy("name", "asc")
+                      .map((user, u) => (
                         <tr key={u}>
                           <td>{u}</td>
                           <td>{user.name}</td>
@@ -107,18 +112,18 @@ export default class Table extends Component {
                             data-target="#mymodal"
                             data-dismiss="modal"
                             name="edit"
-                            onClick={e => this.getUserDetails(e, user.uuid)}
+                            onClick={(e) => this.getUserDetails(e, user.uuid)}
                           />
                           <td
                             className="fa fa-trash fa-lg"
                             data-toggle="modal"
                             data-target="#deletemodal"
                             data-dismiss="modal"
-                            onClick={e => this.getUserDetails(e, user.uuid)}
+                            onClick={(e) => this.getUserDetails(e, user.uuid)}
                           />
                         </tr>
-                      )).value()
-                    }
+                      ))
+                      .value()}
                   </tbody>
                 )}
               </table>
@@ -158,7 +163,7 @@ export default class Table extends Component {
                           className="form-control"
                           name="name"
                           id="name"
-                          onChange={e => this.handleInputChange(e)}
+                          onChange={(e) => this.handleInputChange(e)}
                         />
                       </div>
                     </div>
@@ -179,7 +184,7 @@ export default class Table extends Component {
                           className="form-control"
                           name="age"
                           id="age"
-                          onChange={e => this.handleInputChange(e)}
+                          onChange={(e) => this.handleInputChange(e)}
                         />
                       </div>
                     </div>
@@ -190,7 +195,7 @@ export default class Table extends Component {
                       data-dismiss="modal"
                       data-toggle="modal"
                       data-target="#savemodal"
-                      onClick={e =>
+                      onClick={(e) =>
                         this.handleSubmit(e, this.state.userData.uuid)
                       }
                     >
@@ -211,7 +216,7 @@ export default class Table extends Component {
                     className="close"
                     data-dismiss="modal"
                     aria-label="Close"
-                    onClick={e => this.handleRefresh(e)}
+                    onClick={(e) => this.handleRefresh(e)}
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -250,7 +255,9 @@ export default class Table extends Component {
                   <button
                     className="btn btn-success"
                     data-dismiss="modal"
-                    onClick={e => this.deleteUser(e, this.state.userData.uuid)}
+                    onClick={(e) =>
+                      this.deleteUser(e, this.state.userData.uuid)
+                    }
                   >
                     Confirm
                   </button>
